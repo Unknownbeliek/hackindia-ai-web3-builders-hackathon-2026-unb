@@ -1,0 +1,10 @@
+{
+  "name": "anveshana-hardware-sim",
+  "version": "1.0.0",
+  "description": "AMCU Essae-SN8831 Serial Telemetry Hardware Emulator",
+  "main": "amcu_simulator.js",
+  "type": "module",
+  "scripts": {
+    "start": "node amcu_simulator.js"
+  }
+}

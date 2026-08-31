@@ -1,0 +1,22 @@
+{
+  "name": "anveshana-dairy-protocol-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "workspaces": [
+    "client",
+    "server",
+    "hardware-sim"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm --prefix client run dev\" \"npm --prefix server run start\" \"npm --prefix hardware-sim run start\"",
+    "dev:client": "npm --prefix client run dev",
+    "dev:server": "npm --prefix server run start",
+    "dev:ml": "cd ml-service && uvicorn app.main:app --port 8000 --reload",
+    "dev:sim": "npm --prefix hardware-sim run start",
+    "build": "npm --prefix client run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
