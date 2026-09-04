@@ -4,7 +4,8 @@ import { ShieldCheck, Printer, X, CheckCircle2, Copy } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function EvidenceChainModal() {
-  const { activeEvidenceModal, setActiveEvidenceModal } = useAnveshana();
+  const { activeEvidenceModal, setActiveEvidenceModal, language } = useAnveshana();
+  const isHindi = language === 'HI';
 
   if (!activeEvidenceModal) return null;
 
@@ -17,7 +18,7 @@ export default function EvidenceChainModal() {
 
   const copyHash = () => {
     navigator.clipboard?.writeText(hash || "sha256:7d2b9af8103c31ff78201a44eef");
-    alert("SHA-256 Hash copied to clipboard!");
+    alert(isHindi ? "SHA-256 हैश क्लिपबोर्ड पर कॉपी किया गया!" : "SHA-256 Hash copied to clipboard!");
   };
 
   return (
@@ -29,8 +30,10 @@ export default function EvidenceChainModal() {
               <ShieldCheck className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-[10px] font-extrabold text-emerald-400 tracking-wider uppercase">FSSAI TAMPER-EVIDENT EVIDENCE CHAIN</div>
-              <h3 className="text-lg font-bold text-white tracking-tight">{title || "Cryptographic SHA-256 Audit Package"}</h3>
+              <div className="text-[10px] font-extrabold text-emerald-400 tracking-wider uppercase">
+                {isHindi ? 'FSSAI छेड़छाड़-रहित साक्ष्य श्रृंखला' : 'FSSAI TAMPER-EVIDENT EVIDENCE CHAIN'}
+              </div>
+              <h3 className="text-lg font-bold text-white tracking-tight">{title || (isHindi ? "क्रिप्टोग्राफिक SHA-256 ऑडिट पैकेज" : "Cryptographic SHA-256 Audit Package")}</h3>
             </div>
           </div>
 
@@ -41,7 +44,7 @@ export default function EvidenceChainModal() {
 
         <div className="bg-slate-950 p-4 rounded-2xl border border-emerald-500/30 mb-5 flex items-center justify-between font-mono text-xs">
           <div className="overflow-hidden">
-            <div className="text-[10px] text-slate-400 mb-0.5">SHA-256 RECEPT SIGNATURE</div>
+            <div className="text-[10px] text-slate-400 mb-0.5">{isHindi ? 'SHA-256 रसीद हस्ताक्षर' : 'SHA-256 RECEIPT SIGNATURE'}</div>
             <div className="text-emerald-400 font-bold truncate">{hash || "sha256:7d2b9af8103c31ff78201a44eef"}</div>
           </div>
           <button onClick={copyHash} className="p-2 bg-slate-900 hover:bg-slate-800 text-slate-300 rounded-lg border border-slate-700 ml-3 print:hidden">
@@ -53,18 +56,18 @@ export default function EvidenceChainModal() {
           <div className="glass-panel p-4 rounded-xl border border-slate-800 space-y-2 text-xs">
             <div className="font-bold text-slate-200 border-b border-slate-800 pb-1 mb-2 flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              <span>Court-Admissible Digital Public Infrastructure Proof</span>
+              <span>{isHindi ? 'न्यायालय-स्वीकार्य डिजिटल सार्वजनिक अवसंरचना प्रमाण' : 'Court-Admissible Digital Public Infrastructure Proof'}</span>
             </div>
             <div className="grid grid-cols-2 gap-2 text-slate-300 font-mono">
-              <div>Timestamp: <span className="text-white font-bold">{new Date().toISOString()}</span></div>
-              <div>Node ID: <span className="text-emerald-400 font-bold">{data?.nodeId || "VLC-22"}</span></div>
-              <div>NDLM Hardware Tag: <span className="text-amber-400">AMCU-ESSAE-SN8831</span></div>
-              <div>Verification Status: <span className="text-emerald-400 font-bold">TAMPER-EVIDENT VERIFIED ✅</span></div>
+              <div>{isHindi ? 'समय-स्टाम्प:' : 'Timestamp:'} <span className="text-white font-bold">{new Date().toISOString()}</span></div>
+              <div>{isHindi ? 'नोड आईडी:' : 'Node ID:'} <span className="text-emerald-400 font-bold">{data?.nodeId || "VLC-22"}</span></div>
+              <div>{isHindi ? 'NDLM हार्डवेयर टैग:' : 'NDLM Hardware Tag:'} <span className="text-amber-400">AMCU-ESSAE-SN8831</span></div>
+              <div>{isHindi ? 'सत्यापन स्थिति:' : 'Verification Status:'} <span className="text-emerald-400 font-bold">{isHindi ? 'छेड़छाड़-रहित सत्यापित ✅' : 'TAMPER-EVIDENT VERIFIED ✅'}</span></div>
             </div>
           </div>
 
           <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono">
-            <div className="text-slate-400 mb-2">RAW JSON PAYLOAD AUDIT RECORD:</div>
+            <div className="text-slate-400 mb-2">{isHindi ? 'कच्चा JSON पेलोड ऑडिट रिकॉर्ड:' : 'RAW JSON PAYLOAD AUDIT RECORD:'}</div>
             <pre className="text-[11px] text-emerald-300 whitespace-pre-wrap overflow-x-auto max-h-44 p-2 bg-slate-900/80 rounded border border-slate-800">
               {JSON.stringify(data || { sample: "verified" }, null, 2)}
             </pre>
@@ -77,10 +80,10 @@ export default function EvidenceChainModal() {
             className="flex-1 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-extrabold text-xs rounded-xl shadow-lg flex items-center justify-center gap-2"
           >
             <Printer className="w-4 h-4" />
-            <span>PRINT / DOWNLOAD PDF EVIDENCE PACKAGE</span>
+            <span>{isHindi ? 'प्रिंट / पीडीएफ साक्ष्य पैकेज डाउनलोड करें' : 'PRINT / DOWNLOAD PDF EVIDENCE PACKAGE'}</span>
           </button>
           <button onClick={() => setActiveEvidenceModal(null)} className="px-5 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs rounded-xl">
-            Close
+            {isHindi ? 'बंद करें' : 'Close'}
           </button>
         </div>
       </div>

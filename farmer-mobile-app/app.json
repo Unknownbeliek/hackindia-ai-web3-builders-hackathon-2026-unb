@@ -1,0 +1,18 @@
+{
+  "expo": {
+    "name": "Anveshana Kisan App",
+    "slug": "anveshana-kisan-app",
+    "version": "1.0.0",
+    "sdkVersion": "54.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "platforms": ["android", "ios"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "in.anveshana.kisan"
+    },
+    "android": {
+      "package": "in.anveshana.kisan"
+    }
+  }
+}

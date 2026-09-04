@@ -1,8 +1,8 @@
 import React from 'react';
 import { useAnveshana } from '../context/AnveshanaContext';
-import { Smartphone, Tablet, Monitor, Building2, QrCode, Wifi, WifiOff, Zap, Sliders, Lock, CheckCircle2, LogOut, User } from 'lucide-react';
+import { Smartphone, Tablet, Monitor, Building2, QrCode, Wifi, WifiOff, Zap, Sliders, Lock, CheckCircle2, LogOut, User, ArrowLeft, Home } from 'lucide-react';
 
-export default function HeaderNav() {
+export default function HeaderNav({ onBackToHome }) {
   const {
     currentRole,
     attemptRoleSwitch,
@@ -30,12 +30,14 @@ export default function HeaderNav() {
     });
   };
 
+  const isHindi = language === 'HI';
+
   const portals = [
-    { id: 'FARMER', label: 'Farmer PWA', domain: 'farmer.anveshana.in', icon: Smartphone, color: 'text-emerald-400' },
-    { id: 'AGGREGATOR', label: 'Aggregator Tablet', domain: 'agg.anveshana.in', icon: Tablet, color: 'text-teal-400' },
-    { id: 'QC_OFFICER', label: 'QC Officer Desktop', domain: 'qco.anveshana.in', icon: Monitor, color: 'text-blue-400' },
-    { id: 'GOVT_AUDITOR', label: 'FSSAI Auditor Command', domain: 'govt.anveshana.in', icon: Building2, color: 'text-amber-400' },
-    { id: 'CONSUMER', label: 'Consumer Passport', domain: 'verify.anveshana.in', icon: QrCode, color: 'text-purple-400' }
+    { id: 'FARMER', label: isHindi ? 'किसान ऐप (PWA)' : 'Farmer PWA', domain: 'farmer.anveshana.in', icon: Smartphone, color: 'text-emerald-400' },
+    { id: 'AGGREGATOR', label: isHindi ? 'संग्राहक टैब' : 'Aggregator Tablet', domain: 'agg.anveshana.in', icon: Tablet, color: 'text-teal-400' },
+    { id: 'QC_OFFICER', label: isHindi ? 'गुणवत्ता अधिकारी' : 'QC Officer Desktop', domain: 'qco.anveshana.in', icon: Monitor, color: 'text-blue-400' },
+    { id: 'GOVT_AUDITOR', label: isHindi ? 'एफएसएसएआई कमान' : 'FSSAI Auditor Command', domain: 'govt.anveshana.in', icon: Building2, color: 'text-amber-400' },
+    { id: 'CONSUMER', label: isHindi ? 'उपभोक्ता पासपोर्ट' : 'Consumer Passport', domain: 'verify.anveshana.in', icon: QrCode, color: 'text-purple-400' }
   ];
 
   return (
@@ -44,18 +46,33 @@ export default function HeaderNav() {
         
         {/* Brand Header */}
         <div className="flex items-center gap-3">
+          {onBackToHome && (
+            <button
+              onClick={onBackToHome}
+              className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-emerald-400 hover:border-emerald-500/40 transition-all"
+              title="Back to Home"
+            >
+              <Home className="w-4 h-4" />
+            </button>
+          )}
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-xl font-extrabold text-white tracking-tight flex items-center gap-2">
                 <span>Anveshana</span>
                 <span className="text-emerald-400 font-hindi font-normal text-base">(अन्वेषण)</span>
               </h1>
-              <span className="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full border border-emerald-500/40 font-mono font-bold">
-                NATIONAL DPI PROTOCOL
+              <span className="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full border border-emerald-500/40 font-mono font-bold uppercase">
+                {isHindi ? 'राष्ट्रीय डीपीआई प्रोटोकॉल' : 'NATIONAL DPI PROTOCOL'}
+              </span>
+              <span className="bg-rose-950/90 text-rose-400 text-[10px] px-2.5 py-0.5 rounded-full border border-rose-500/40 font-mono font-bold uppercase flex items-center gap-1 shadow-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping"></span>
+                <span>REC • LIVE DEMO</span>
               </span>
             </div>
             <p className="text-[11px] text-slate-400 hidden sm:block">
-              India's Open Dairy Intelligence Protocol — Hardware-Anchored NDLM Supply Chain Audit Engine
+              {isHindi 
+                ? 'भारत का खुला डेयरी इंटेलिजेंस प्रोटोकॉल — हार्डवेयर-एंकर्ड एनडीएलएम आपूर्ति श्रृंखला लेखापरीक्षा इंजन'
+                : "India's Open Dairy Intelligence Protocol — Hardware-Anchored NDLM Supply Chain Audit Engine"}
             </p>
           </div>
         </div>
@@ -75,7 +92,7 @@ export default function HeaderNav() {
                 <button
                   onClick={() => logoutRole(currentRole)}
                   className="ml-1 p-1 hover:bg-slate-800 text-slate-400 hover:text-rose-400 rounded transition-colors"
-                  title="Switch Registered ID / Logout"
+                  title={isHindi ? "पंजीकृत आईडी बदलें / लॉगआउट" : "Switch Registered ID / Logout"}
                 >
                   <LogOut className="w-3.5 h-3.5" />
                 </button>
@@ -86,19 +103,19 @@ export default function HeaderNav() {
           {/* Quick Simulation Actions */}
           <div className="hidden lg:flex items-center gap-2 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800 text-xs">
             <span className="text-[10px] text-slate-400 font-mono px-2 flex items-center gap-1">
-              <Zap className="w-3 h-3 text-amber-400" /> SIMULATE:
+              <Zap className="w-3 h-3 text-amber-400" /> {isHindi ? 'सिमुलेशन:' : 'SIMULATE:'}
             </span>
             <button
               onClick={handleSimulateQuickPour}
               className="px-2.5 py-1 bg-emerald-950 hover:bg-emerald-900 text-emerald-300 rounded border border-emerald-500/30 font-semibold text-[11px]"
             >
-              + Pour Event
+              {isHindi ? '+ दुग्ध जमाव' : '+ Pour Event'}
             </button>
             <button
               onClick={injectVolumeAnomalySimulation}
               className="px-2.5 py-1 bg-rose-950 hover:bg-rose-900 text-rose-300 rounded border border-rose-500/30 font-semibold text-[11px]"
             >
-              + Water Anomaly
+              {isHindi ? '+ मिलावट विसंगति' : '+ Water Anomaly'}
             </button>
           </div>
 
@@ -120,7 +137,9 @@ export default function HeaderNav() {
             }`}
           >
             {isOnline ? <Wifi className="w-3.5 h-3.5 text-emerald-400" /> : <WifiOff className="w-3.5 h-3.5 text-rose-400" />}
-            <span className="hidden md:inline">{isOnline ? 'ONLINE' : 'OFFLINE MODE'}</span>
+            <span className="hidden md:inline">
+              {isOnline ? (isHindi ? 'ऑनलाइन' : 'ONLINE') : (isHindi ? 'ऑफ़लाइन मोड' : 'OFFLINE MODE')}
+            </span>
           </button>
         </div>
       </div>
@@ -129,8 +148,9 @@ export default function HeaderNav() {
       <div className="bg-slate-950/80 border-t border-slate-800/80 px-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between overflow-x-auto py-1 text-xs">
           <div className="flex items-center gap-1 min-w-max">
-            <span className="text-[10px] text-slate-400 uppercase font-bold px-2 py-1 flex items-center gap-1">
-              <Sliders className="w-3 h-3 text-emerald-400" /> ACTIVE PORTAL:
+            <span className="text-[10px] text-emerald-400 font-extrabold uppercase px-2.5 py-1 rounded-lg bg-emerald-950/90 border border-emerald-500/40 flex items-center gap-1.5 shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              <Sliders className="w-3 h-3 text-emerald-400" /> {isHindi ? 'डेमो पोर्टल:' : 'DEMO PORTAL:'}
             </span>
 
             {portals.map((portal) => {
@@ -154,11 +174,11 @@ export default function HeaderNav() {
                   {/* Lock / Verified Badge Indicator */}
                   {isAuth ? (
                     <span className="text-[10px] text-emerald-400 bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-500/30 font-mono font-bold flex items-center gap-0.5">
-                      <CheckCircle2 className="w-2.5 h-2.5 text-emerald-400" /> AUTH
+                      <CheckCircle2 className="w-2.5 h-2.5 text-emerald-400" /> {isHindi ? 'प्रमाणित' : 'AUTH'}
                     </span>
                   ) : (
                     <span className="text-[10px] text-amber-400 bg-amber-950/80 px-1.5 py-0.5 rounded border border-amber-500/30 font-mono font-bold flex items-center gap-0.5">
-                      <Lock className="w-2.5 h-2.5 text-amber-400" /> LOCKED
+                      <Lock className="w-2.5 h-2.5 text-amber-400" /> {isHindi ? 'लॉक' : 'LOCKED'}
                     </span>
                   )}
                 </button>

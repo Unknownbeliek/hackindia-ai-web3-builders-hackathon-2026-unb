@@ -8,9 +8,11 @@ export default function RegisteredIdAuthModal() {
     authModalState,
     setAuthModalState,
     loginWithRegisteredId,
-    REGISTERED_ID_DIRECTORY
+    REGISTERED_ID_DIRECTORY,
+    language
   } = useAnveshana();
 
+  const isHindi = language === 'HI';
   const [enteredId, setEnteredId] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -18,11 +20,11 @@ export default function RegisteredIdAuthModal() {
 
   const targetRole = authModalState.targetRole || 'QC_OFFICER';
   const roleNameMap = {
-    FARMER: 'Farmer PWA Portal',
-    AGGREGATOR: 'Aggregator Collection Tablet',
-    QC_OFFICER: 'QC Officer Reconciliation Portal',
-    GOVT_AUDITOR: 'FSSAI State Auditor Command',
-    CONSUMER: 'Public Consumer Passport'
+    FARMER: isHindi ? 'किसान पीडब्ल्यूए पोर्टल' : 'Farmer PWA Portal',
+    AGGREGATOR: isHindi ? 'संग्राहक संग्रह टैबलेट' : 'Aggregator Collection Tablet',
+    QC_OFFICER: isHindi ? 'गुणवत्ता अधिकारी समाधान पोर्टल' : 'QC Officer Reconciliation Portal',
+    GOVT_AUDITOR: isHindi ? 'FSSAI राज्य लेखापरीक्षक कमान' : 'FSSAI State Auditor Command',
+    CONSUMER: isHindi ? 'सार्वजनिक उपभोक्ता पासपोर्ट' : 'Public Consumer Passport'
   };
 
   const handleFormSubmit = (e) => {
@@ -30,7 +32,7 @@ export default function RegisteredIdAuthModal() {
     setErrorMessage(null);
 
     if (!enteredId.trim()) {
-      setErrorMessage('Please enter your Registered ID, Badge Number, or NDLM Tag.');
+      setErrorMessage(isHindi ? 'कृपया अपना पंजीकृत आईडी, बैज नंबर या NDLM टैग दर्ज करें।' : 'Please enter your Registered ID, Badge Number, or NDLM Tag.');
       return;
     }
 
@@ -63,7 +65,9 @@ export default function RegisteredIdAuthModal() {
               <Lock className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-[10px] font-extrabold text-emerald-400 tracking-wider uppercase">RESTRICTED DPI PORTAL ACCESS</div>
+              <div className="text-[10px] font-extrabold text-emerald-400 tracking-wider uppercase">
+                {isHindi ? 'प्रतिबंधित डीपीआई पोर्टल पहुंच' : 'RESTRICTED DPI PORTAL ACCESS'}
+              </div>
               <h3 className="text-lg font-bold text-white tracking-tight">{roleNameMap[targetRole]}</h3>
             </div>
           </div>
@@ -80,10 +84,10 @@ export default function RegisteredIdAuthModal() {
         <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 mb-5">
           <div className="flex items-center gap-2 text-xs font-bold text-amber-400 mb-1">
             <ShieldCheck className="w-4 h-4" />
-            <span>Registered ID Verification Required</span>
+            <span>{isHindi ? 'पंजीकृत आईडी सत्यापन आवश्यक' : 'Registered ID Verification Required'}</span>
           </div>
           <p className="text-xs text-slate-300">
-            Access to the <span className="font-bold text-white">{roleNameMap[targetRole]}</span> requires authenticating with a registered NDLM tag or Master Admin ID <span className="font-mono text-emerald-400 font-bold">1234</span>.
+            {isHindi ? 'पोर्टल ' : 'Access to the '}<span className="font-bold text-white">{roleNameMap[targetRole]}</span>{isHindi ? ' में प्रवेश के लिए पंजीकृत NDLM टैग या मास्टर एडमिन आईडी ' : ' requires authenticating with a registered NDLM tag or Master Admin ID '}<span className="font-mono text-emerald-400 font-bold">1234</span>{isHindi ? ' का उपयोग करें।' : '.'}
           </p>
         </div>
 
@@ -91,7 +95,7 @@ export default function RegisteredIdAuthModal() {
         <form onSubmit={handleFormSubmit} className="space-y-4 mb-5">
           <div>
             <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block mb-2">
-              Enter Registered ID or Admin Code (e.g. 1234)
+              {isHindi ? 'पंजीकृत आईडी या एडमिन कोड दर्ज करें (उदा. 1234)' : 'Enter Registered ID or Admin Code (e.g. 1234)'}
             </label>
             <div className="relative">
               <Key className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
@@ -99,7 +103,7 @@ export default function RegisteredIdAuthModal() {
                 type="text"
                 value={enteredId}
                 onChange={(e) => setEnteredId(e.target.value)}
-                placeholder="Enter 1234 or Registered ID..."
+                placeholder={isHindi ? "1234 या पंजीकृत आईडी दर्ज करें..." : "Enter 1234 or Registered ID..."}
                 className="w-full glass-input text-xs rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:border-emerald-400 font-mono text-white placeholder-slate-500"
               />
             </div>
@@ -117,7 +121,7 @@ export default function RegisteredIdAuthModal() {
             className="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-extrabold text-xs rounded-xl shadow-lg flex items-center justify-center gap-2 tracking-wide uppercase"
           >
             <UserCheck className="w-4 h-4" />
-            <span>VERIFY CREDENTIAL & ACCESS PORTAL</span>
+            <span>{isHindi ? 'प्रमाण-पत्र सत्यापित करें और पोर्टल खोलें' : 'VERIFY CREDENTIAL & ACCESS PORTAL'}</span>
           </button>
         </form>
 
@@ -133,8 +137,8 @@ export default function RegisteredIdAuthModal() {
             <div className="flex items-center gap-2.5">
               <ShieldAlert className="w-5 h-5 text-amber-400 shrink-0" />
               <div>
-                <div className="font-extrabold text-amber-300 group-hover:text-amber-200">🔑 Quick Login with Master Admin Passcode</div>
-                <div className="text-[10px] text-slate-300 font-mono">Master Passcode: <span className="text-emerald-400 font-bold">1234</span> (Unlocks ALL Portals)</div>
+                <div className="font-extrabold text-amber-300 group-hover:text-amber-200">🔑 {isHindi ? 'मास्टर एडमिन पासकोड से त्वरित लॉगिन' : 'Quick Login with Master Admin Passcode'}</div>
+                <div className="text-[10px] text-slate-300 font-mono">{isHindi ? 'मास्टर पासकोड:' : 'Master Passcode:'} <span className="text-emerald-400 font-bold">1234</span> ({isHindi ? 'सभी पोर्टल खोलता है' : 'Unlocks ALL Portals'})</div>
               </div>
             </div>
             <ArrowRight className="w-4 h-4 text-amber-400 group-hover:translate-x-0.5 transition-transform" />
@@ -142,7 +146,7 @@ export default function RegisteredIdAuthModal() {
 
           {/* Role Credentials */}
           <div className="space-y-1.5">
-            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-1">Role Registered Credentials:</div>
+            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-1">{isHindi ? 'पंजीकृत क्रेडेंशियल दर्ज सूची:' : 'Role Registered Credentials:'}</div>
             {demoList.map((demo) => (
               <button
                 key={demo.id}

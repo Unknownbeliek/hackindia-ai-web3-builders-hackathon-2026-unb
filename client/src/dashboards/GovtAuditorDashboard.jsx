@@ -23,6 +23,27 @@ export default function GovtAuditorDashboard() {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const [selectedDistrictName, setSelectedDistrictName] = useState('ALL');
+  const [showRaidModal, setShowRaidModal] = useState(false);
+  const [selectedRaidAnomaly, setSelectedRaidAnomaly] = useState(null);
+  const [raidStep, setRaidStep] = useState(0); // 0: Idle, 1: Node Target Lock, 2: Officer Warrant Gen, 3: Evidence Package Lock, 4: Unit Dispatched
+
+  const handleStartRaidProtocol = (anomaly) => {
+    setSelectedRaidAnomaly(anomaly);
+    setShowRaidModal(true);
+    setRaidStep(1);
+
+    setTimeout(() => {
+      setRaidStep(2);
+      setTimeout(() => {
+        setRaidStep(3);
+        setTimeout(() => {
+          setRaidStep(4);
+          dispatchRaid(anomaly.anomalyId);
+          confetti({ particleCount: 80, spread: 90, origin: { y: 0.5 } });
+        }, 1200);
+      }, 1200);
+    }, 1200);
+  };
 
   const currentJurisdictionData = STATE_DISTRICT_DIRECTORY[selectedJurisdiction] || STATE_DISTRICT_DIRECTORY['FSSAI-DL'];
   const districtList = currentJurisdictionData.districts || [];
@@ -316,7 +337,7 @@ export default function GovtAuditorDashboard() {
                     <div className="pt-1 flex flex-wrap items-center justify-between gap-2">
                       {!isDispatched ? (
                         <button
-                          onClick={() => dispatchRaid(ano.anomalyId)}
+                          onClick={() => handleStartRaidProtocol(ano)}
                           className="px-3 py-1.5 bg-gradient-to-r from-rose-600 to-red-700 hover:from-rose-500 hover:to-red-600 text-white font-bold text-[11px] rounded-lg shadow flex items-center gap-1"
                         >
                           <Send className="w-3 h-3" />
@@ -350,7 +371,7 @@ export default function GovtAuditorDashboard() {
         </div>
       </div>
 
-      {/* Live Incident Feed */}
+      {/* LIVE INCIDENT FEED */}
       <div className="glass-panel p-5 rounded-2xl">
         <div className="flex items-center justify-between mb-3 border-b border-slate-800 pb-2">
           <div className="flex items-center gap-2">
@@ -381,6 +402,93 @@ export default function GovtAuditorDashboard() {
           ))}
         </div>
       </div>
+
+      {/* INTERACTIVE FLYING SQUAD RAID DISPATCH MODAL */}
+      {showRaidModal && selectedRaidAnomaly && (
+        <div className="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="glass-panel p-6 rounded-3xl max-w-lg w-full border border-rose-500/50 shadow-2xl space-y-5 animate-in zoom-in duration-200">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div className="flex items-center gap-2">
+                <ShieldAlert className="w-6 h-6 text-rose-400 animate-bounce" />
+                <div>
+                  <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+                    {isHindi ? 'एफएसएसएआई उड़न दस्ता प्रवर्तन वारंट' : 'FSSAI Flying Squad Enforcement Protocol'}
+                  </h3>
+                  <div className="text-[10px] font-mono text-rose-400">TARGET NODE: {selectedRaidAnomaly.nodeName}</div>
+                </div>
+              </div>
+              <span className="text-[10px] font-mono font-bold bg-rose-950 text-rose-300 border border-rose-500/30 px-2.5 py-1 rounded-lg">
+                FSSAI WAR-ROOM
+              </span>
+            </div>
+
+            {/* Stepper Progress */}
+            <div className="grid grid-cols-4 gap-2 text-center text-[10px] font-mono">
+              <div className={`p-2 rounded-xl border ${raidStep >= 1 ? 'bg-rose-950 border-rose-500 text-rose-300' : 'bg-slate-900 border-slate-800 text-slate-500'}`}>
+                1. Target Lock
+              </div>
+              <div className={`p-2 rounded-xl border ${raidStep >= 2 ? 'bg-rose-950 border-rose-500 text-rose-300' : 'bg-slate-900 border-slate-800 text-slate-500'}`}>
+                2. RBAC Warrant
+              </div>
+              <div className={`p-2 rounded-xl border ${raidStep >= 3 ? 'bg-rose-950 border-rose-500 text-rose-300' : 'bg-slate-900 border-slate-800 text-slate-500'}`}>
+                3. Lock Evidence
+              </div>
+              <div className={`p-2 rounded-xl border ${raidStep >= 4 ? 'bg-emerald-950 border-emerald-500 text-emerald-300' : 'bg-slate-900 border-slate-800 text-slate-500'}`}>
+                4. Squad Sent
+              </div>
+            </div>
+
+            <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-4 text-xs font-mono">
+              {raidStep === 1 && (
+                <div className="space-y-2 text-center py-4">
+                  <MapPin className="w-8 h-8 text-rose-400 animate-spin mx-auto" />
+                  <div className="text-white font-bold">{isHindi ? '1. लक्ष्य जीपीएस नोड लॉक किया जा रहा है...' : '1. Locking Target Node GPS Telemetry...'}</div>
+                  <div className="text-rose-400 text-[11px]">{selectedRaidAnomaly.nodeName} ({selectedRaidAnomaly.nodeId})</div>
+                </div>
+              )}
+
+              {raidStep === 2 && (
+                <div className="space-y-2 text-center py-4">
+                  <Shield className="w-8 h-8 text-amber-400 animate-pulse mx-auto" />
+                  <div className="text-white font-bold">{isHindi ? '2. अधिकारी क्षेत्राधिकार वारंट हस्ताक्षर...' : '2. Signing RBAC Enforcement Warrant...'}</div>
+                  <div className="text-slate-300 text-[11px] font-sans">Issued by: {currentOfficerProfile.title} ({currentOfficerProfile.scope})</div>
+                </div>
+              )}
+
+              {raidStep === 3 && (
+                <div className="space-y-2 text-center py-4">
+                  <FileText className="w-8 h-8 text-blue-400 animate-bounce mx-auto" />
+                  <div className="text-white font-bold">{isHindi ? '3. सीलबंद अदालत साक्ष्य पैकेज जनरेट...' : '3. Sealing Cryptographic Evidence Package...'}</div>
+                  <div className="text-blue-400 text-[10px]">sha256:raid8840192837462019ab</div>
+                </div>
+              )}
+
+              {raidStep >= 4 && (
+                <div className="space-y-3 text-center py-2">
+                  <div className="w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center text-xl mx-auto">
+                    🚓
+                  </div>
+                  <div className="text-emerald-400 font-extrabold text-sm">{isHindi ? 'उड़न दस्ता सफलतापूर्वक रवाना!' : 'Flying Squad En-Route to Site!'}</div>
+                  <div className="text-slate-300 text-[11px] font-sans">
+                    {isHindi 
+                      ? 'विशेष टास्क फोर्स दल को रवाना कर दिया गया है। टिकट #884 लाइव ट्रैकिंग जारी है।'
+                      : 'Special Enforcement Task Force dispatched to target chilling center. Real-time GPS tracking initialized under Ticket #884.'}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {raidStep >= 4 && (
+              <button
+                onClick={() => setShowRaidModal(false)}
+                className="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs rounded-xl shadow"
+              >
+                {isHindi ? 'पूर्ण / वारंट बंद करें' : 'DONE / CLOSE WAR-ROOM'}
+              </button>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
