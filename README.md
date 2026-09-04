@@ -1,7 +1,5 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/shield-check.svg" width="80" height="80" />
-
 # Anveshana (अन्वेषण)
 
 ### India's Open Dairy Intelligence Protocol
@@ -9,7 +7,7 @@
 **A Hardware-Anchored, AI-Driven Digital Public Infrastructure (DPI)**  
 **for Tamper-Evident Dairy Supply Chain Integrity Across India.**
 
-[![HackIndia 2026](https://img.shields.io/badge/🏆_HackIndia-AI_%26_Web3_2026-10B981?style=flat-square)](https://hackindia.xyz)
+[![HackIndia 2026](https://img.shields.io/badge/HackIndia-AI_%26_Web3_2026-10B981?style=flat-square)](https://hackindia.xyz)
 [![Version](https://img.shields.io/badge/Version-1.0.0-8B5CF6?style=flat-square)](./package.json)
 [![License: MIT](https://img.shields.io/badge/License-MIT-3B82F6?style=flat-square)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-emerald?style=flat-square)](https://github.com/Unknownbeliek/hackindia-ai-web3-builders-hackathon-2026-unb/pulls)
@@ -24,15 +22,15 @@
 
 ---
 
-**[🚀 Live Demo](#-quick-start)** · **[🏗️ Architecture](#-architecture)** · **[📡 API Reference](#-api-reference)** · **[🗺️ Roadmap](#-roadmap)**
+**[Quick Start](#quick-start)** | **[Architecture](#architecture)** | **[API Reference](#api-reference)** | **[Roadmap](#roadmap)**
 
 </div>
 
 ---
 
-## 🚨 The Problem
+## The Problem
 
-India is the **world's largest milk producer**, yet the domestic dairy supply chain is riddled with systemic fraud.
+India is the world's largest milk producer, yet the domestic dairy supply chain is riddled with systemic fraud.
 
 ```
 GROUND REALITY — Verified by FSSAI National Survey
@@ -46,40 +44,40 @@ GROUND REALITY — Verified by FSSAI National Survey
 **Where does fraud happen?**
 
 ```
-[ 🐄 Registered Milch Animal ]
+[ Registered Milch Animal ]
           │  NDLM Ear Tag (Government Registry)
           ▼
-[ 🏠 Village Collection Center ]  ←── ❌ Fat/SNF readings manually altered
-          │                             ❌ Urea & water added to expand volume
+[ Village Collection Center ]  <-- [X] Fat/SNF readings manually altered
+          │                     <-- [X] Urea & water added to expand volume
           ▼
-[ 🚚 Bulk Milk Chiller Transport ] ←── ❌ No mid-stream telemetry or oversight
+[ Bulk Milk Chiller Transport ] <-- [X] No mid-stream telemetry or oversight
           │
           ▼
-[ 🏭 Processing Plant & Packaging ] ←── ❌ Paper manifests easily bypassed
+[ Processing Plant & Packaging ] <-- [X] Paper manifests easily bypassed
           │
           ▼
-[ 🛒 Consumer Milk Pouch ]          ←── ❌ Zero verifiable origin traceability
+[ Consumer Milk Pouch ]          <-- [X] Zero verifiable origin traceability
 ```
 
 **The root cause**: No digital infrastructure exists that cryptographically anchors livestock identity to production data and enforces tamper-evident audit trails from farm to consumer.
 
 ---
 
-## 💡 The Solution — Anveshana
+## The Solution — Anveshana
 
 > *Inspired by **Maharashtra FDA Commissioner Shri Tukaram Mundhe's** mandate for a centralized production data portal linked to individual registered livestock — we built the technical reality of that vision.*
 
 **Anveshana (अन्वेषण)** is a **multi-stakeholder, hardware-anchored Digital Public Infrastructure (DPI)** that:
 
-- 🔗 Cryptographically links **government NDLM livestock ear tags** to every liter of milk
-- 🤖 Deploys a **Python Isolation Forest AI engine** to detect water dilution and volume expansion in real time
-- 🏛️ Arms **FSSAI food safety officers** with a live GIS command center, AI priority raid indexing, and one-click court evidence generation
-- 🌾 Protects **smallholder farmers** with verifiable blockchain-backed income receipts
-- 🏷️ Gives **consumers** a full farm-to-door purity passport via QR code scan
+- Cryptographically links **government NDLM livestock ear tags** to every liter of milk
+- Deploys a **Python Isolation Forest AI engine** to detect water dilution and volume expansion in real time
+- Arms **FSSAI food safety officers** with a live GIS command center, AI priority raid indexing, and one-click court evidence generation
+- Protects **smallholder farmers** with verifiable blockchain-backed income receipts
+- Gives **consumers** a full farm-to-door purity passport via QR code scan
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ### High-Level Overview
 
@@ -100,7 +98,7 @@ GROUND REALITY — Verified by FSSAI National Survey
                                               │
   GATEWAY LAYER (Node.js 18 + Express + Socket.io)
   ┌─────────────────────────────────────────────────────────────────────────┐
-  │  /api/v1 → JWT-authenticated routes   /health → Status endpoint         │
+  │  /api/v1 -> JWT-authenticated routes   /health -> Status endpoint       │
   │  Socket.io: telemetry_tick, join_jurisdiction channels                  │
   │  EADDRINUSE port fallback handling for zero-downtime restarts           │
   └───────────────────────────────────┬─────────────────────────────────────┘
@@ -121,7 +119,7 @@ GROUND REALITY — Verified by FSSAI National Survey
 ```
 anveshana-dairy-protocol-monorepo/
 │
-├── client/                          # 🌐 React 18 Web Dashboard (Vite + TailwindCSS)
+├── client/                          # React 18 Web Dashboard (Vite + TailwindCSS)
 │   ├── src/
 │   │   ├── context/
 │   │   │   └── AnveshanaContext.jsx # Global RBAC state, jurisdiction directory, i18n
@@ -137,24 +135,24 @@ anveshana-dairy-protocol-monorepo/
 │   │   │   └── ConsumerPassport.jsx # QR lookup, cold-chain graphs, on-chain verify
 │   │   ├── pages/
 │   │   │   └── LandingPage.jsx      # Platform hero page with portal entry points
-│   │   └── App.jsx                  # Root router: LandingPage ↔ DashboardRouter (RBAC)
+│   │   └── App.jsx                  # Root router: LandingPage <-> DashboardRouter (RBAC)
 │   └── .env                         # Client environment variables
 │
-├── server/                          # ⚡ Node.js 18 API + Socket.io Gateway
+├── server/                          # Node.js 18 API + Socket.io Gateway
 │   └── src/
 │       ├── server.js                # Express gateway, Socket.io WS, 10s telemetry tick
 │       ├── routes/apiRoutes.js      # REST route definitions
 │       └── middleware/authMiddleware.js   # JWT verification middleware
 │
-├── ml-service/                      # 🤖 Python 3.10 FastAPI ML Inference Engine
+├── ml-service/                      # Python 3.10 FastAPI ML Inference Engine
 │   └── app/
 │       ├── main.py                  # /predict/yield-anomaly + /predict/volume-expansion
 │       └── requirements.txt         # fastapi, uvicorn, pydantic, numpy, scikit-learn
 │
-├── hardware-sim/                    # 🔌 Essae-SN8831 AMCU Hardware Simulator
+├── hardware-sim/                    # Essae-SN8831 AMCU Hardware Simulator
 │   └── index.js                     # RS232 serial emulator + Secp256k1 HSM mock
 │
-├── farmer-mobile-app/               # 📱 React Native (Expo) Mobile Companion App
+├── farmer-mobile-app/               # React Native (Expo) Mobile Companion App
 │   └── src/screens/                 # HomeScreen, PourScreen, KCCScreen, AmcuSyncScreen
 │
 └── package.json                     # Root monorepo: npm workspaces + concurrently scripts
@@ -162,79 +160,79 @@ anveshana-dairy-protocol-monorepo/
 
 ---
 
-## 📱 The 5-Portal Ecosystem
+## The 5-Portal Ecosystem
 
 All portals are protected by **RBAC (Role-Based Access Control)**. Use the **Master Admin Passcode `1234`** to unlock all portals during evaluation.
 
 ---
 
-### 🌾 Portal 1 — Farmer PWA
+### Portal 1 — Farmer PWA
 
-**Target**: ≥120M smallholder dairy farmers in rural India
+**Target**: >=120M smallholder dairy farmers in rural India
 
 | Feature | Description |
 | :---- | :---- |
-| 🐄 **NDLM Cattle Tag Sync** | View all government-registered milch animals linked to the Aadhaar-farmer identity |
-| 🥛 **Milk Pour Logger** | Instant digital receipt on every pour — Fat %, SNF %, weight, payout, and SHA-256 hash |
-| 💳 **NABARD KCC Micro-Loan** | One-click Kisan Credit Card loan eligibility based on Anveshana Farm Purity Score |
-| 🔊 **Regional Audio Narrator** | Text-to-Speech (TTS) receipts in the farmer's native dialect and regional accent |
-| 📶 **Offline Sync Buffer** | Local queue buffers collections during rural connectivity blackouts |
+| **NDLM Cattle Tag Sync** | View all government-registered milch animals linked to the Aadhaar-farmer identity |
+| **Milk Pour Logger** | Instant digital receipt on every pour — Fat %, SNF %, weight, payout, and SHA-256 hash |
+| **NABARD KCC Micro-Loan** | One-click Kisan Credit Card loan eligibility based on Anveshana Farm Purity Score |
+| **Regional Audio Narrator** | Text-to-Speech (TTS) receipts in the farmer's native dialect and regional accent |
+| **Offline Sync Buffer** | Local queue buffers collections during rural connectivity blackouts |
 
 ---
 
-### 🥛 Portal 2 — Aggregator Hardware Tablet
+### Portal 2 — Aggregator Hardware Tablet
 
 **Target**: Village AMCU operators and milk collection center managers
 
 | Feature | Description |
 | :---- | :---- |
-| 🔌 **AMCU IoT Telemetry Lock** | Read-only serial data feed from Essae-SN8831 AMCU hardware — no manual entry possible |
-| 🔏 **HSM Secp256k1 Signing** | Every transaction cryptographically signed at hardware level before network transmission |
-| 📦 **Offline Transaction Queue** | Auto-sync buffer stores up to 72h of collections during network outages |
-| 📡 **Live Socket Telemetry** | Real-time `liveFlowRateLPM` and `inlineDensityKgL` streamed via Socket.io `telemetry_tick` |
+| **AMCU IoT Telemetry Lock** | Read-only serial data feed from Essae-SN8831 AMCU hardware — no manual entry possible |
+| **HSM Secp256k1 Signing** | Every transaction cryptographically signed at hardware level before network transmission |
+| **Offline Transaction Queue** | Auto-sync buffer stores up to 72h of collections during network outages |
+| **Live Socket Telemetry** | Real-time `liveFlowRateLPM` and `inlineDensityKgL` streamed via Socket.io `telemetry_tick` |
 
 ---
 
-### 🔬 Portal 3 — QC Officer Console
+### Portal 3 — QC Officer Console
 
 **Target**: Quality control managers at dairy processing plants
 
 | Feature | Description |
 | :---- | :---- |
-| ⚖️ **Mass Balance Audit** | Cross-reference dispatch volumes from chillers against factory weighbridge receipts |
-| 🧪 **Refractometer Integration** | Log RI values, freezing-point-depression readings, and adulteration flags |
-| 🚫 **Automated Batch Quarantine** | Instantly quarantine suspect batches before pasteurization with a full audit log |
+| **Mass Balance Audit** | Cross-reference dispatch volumes from chillers against factory weighbridge receipts |
+| **Refractometer Integration** | Log RI values, freezing-point-depression readings, and adulteration flags |
+| **Automated Batch Quarantine** | Instantly quarantine suspect batches before pasteurization with a full audit log |
 
 ---
 
-### 🏛️ Portal 4 — FSSAI State Auditor Command Center
+### Portal 4 — FSSAI State Auditor Command Center
 
 **Target**: State food safety commissioners and flying squad coordinators
 
 | Feature | Description |
 | :---- | :---- |
-| 🗺️ **Live GIS Heatmap** | Leaflet.js interactive map with real-time anomaly overlays across Indian states |
-| 🔍 **State → District Drill-Down** | Smooth camera `flyTo` animation into Haryana, Maharashtra, Gujarat, UP, and Punjab districts |
-| 🌐 **One-Click Hindi Localization** | `🌐 हिंदी` toggle switches entire command interface for regional food safety officers |
-| 🤖 **AI Priority Raid Index** | Python ML engine scores and ranks collection centers by dilution risk in real time |
-| ⚡ **Flying Squad Dispatch** | One-click raid warrant generation with sealed SHA-256 court evidence package |
+| **Live GIS Heatmap** | Leaflet.js interactive map with real-time anomaly overlays across Indian states |
+| **State -> District Drill-Down** | Smooth camera `flyTo` animation into Haryana, Maharashtra, Gujarat, UP, and Punjab districts |
+| **One-Click Hindi Localization** | `🌐 हिंदी` toggle switches entire command interface for regional food safety officers |
+| **AI Priority Raid Index** | Python ML engine scores and ranks collection centers by dilution risk in real time |
+| **Flying Squad Dispatch** | One-click raid warrant generation with sealed SHA-256 court evidence package |
 
 ---
 
-### 🏷️ Portal 5 — Consumer Purity Passport
+### Portal 5 — Consumer Purity Passport
 
 **Target**: End consumers, retailers, and food safety advocates
 
 | Feature | Description |
 | :---- | :---- |
-| 📷 **Universal QR Scanner** | Camera-based, batchId-based, or manual lookup for any milk pouch |
-| 🗺️ **Provenance Trail** | Multi-hop farm → chiller → plant → shelf supply chain journey with GPS timestamps |
-| 🌡️ **Cold-Chain Temperature Audit** | Uninterrupted refrigeration logs visualized across each transit hop |
-| ⛓️ **On-Chain Cryptographic Verify** | Verify milk SHA-256 purity receipt against on-chain provenance ledger |
+| **Universal QR Scanner** | Camera-based, batchId-based, or manual lookup for any milk pouch |
+| **Provenance Trail** | Multi-hop farm -> chiller -> plant -> shelf supply chain journey with GPS timestamps |
+| **Cold-Chain Temperature Audit** | Uninterrupted refrigeration logs visualized across each transit hop |
+| **On-Chain Cryptographic Verify** | Verify milk SHA-256 purity receipt against on-chain provenance ledger |
 
 ---
 
-## 🤖 AI Model — Isolation Forest Engine
+## AI Model — Isolation Forest Engine
 
 The `ml-service` runs a custom **FastAPI v0.110+ inference server** with two live endpoints:
 
@@ -264,7 +262,7 @@ is_violation  = abs(delta_percent) > max_tolerable_percent
 
 ---
 
-## 📡 API Reference
+## API Reference
 
 ### Gateway Base URL: `http://localhost:5000`
 
@@ -280,10 +278,10 @@ is_violation  = abs(delta_percent) > max_tolerable_percent
 
 | Event | Direction | Payload | Description |
 | :-- | :-- | :-- | :-- |
-| `join_jurisdiction` | Client → Server | `{ jurisdiction: "haryana" }` | Subscribe to a jurisdiction's telemetry room |
-| `telemetry_tick` | Server → Client | `{ nodeId, liveFlowRateLPM, inlineDensityKgL, timestamp }` | 10-second live AMCU telemetry broadcast |
-| `anomaly:detected` | Server → Client | `{ batchId, score, stateCode }` | AI anomaly alert pushed to FSSAI GIS command |
-| `raid:dispatched` | Server → Client | `{ warrantId, centerCode, officerCount }` | Live raid status broadcast to enforcement teams |
+| `join_jurisdiction` | Client -> Server | `{ jurisdiction: "haryana" }` | Subscribe to a jurisdiction's telemetry room |
+| `telemetry_tick` | Server -> Client | `{ nodeId, liveFlowRateLPM, inlineDensityKgL, timestamp }` | 10-second live AMCU telemetry broadcast |
+| `anomaly:detected` | Server -> Client | `{ batchId, score, stateCode }` | AI anomaly alert pushed to FSSAI GIS command |
+| `raid:dispatched` | Server -> Client | `{ warrantId, centerCode, officerCount }` | Live raid status broadcast to enforcement teams |
 
 ### ML Engine Base URL: `http://localhost:8000`
 
@@ -295,14 +293,14 @@ is_violation  = abs(delta_percent) > max_tolerable_percent
 
 ---
 
-## ⚡ Quick Start
+## Quick Start
 
 ### Prerequisites
 
 ```
-Node.js  ≥ 18.0.0
-npm      ≥ 9.0.0
-Python   ≥ 3.10.0
+Node.js  >= 18.0.0
+npm      >= 9.0.0
+Python   >= 3.10.0
 ```
 
 ### 1 — Clone & Bootstrap
@@ -342,13 +340,13 @@ npm run dev
 
 ```bash
 # Terminal 1 — React Client Dashboard
-npm run dev:client      # → http://localhost:3000
+npm run dev:client      # -> http://localhost:3000
 
 # Terminal 2 — Node.js Telemetry Gateway
-npm run dev:server      # → http://localhost:5000
+npm run dev:server      # -> http://localhost:5000
 
 # Terminal 3 — Python FastAPI ML Engine
-npm run dev:ml          # → http://localhost:8000
+npm run dev:ml          # -> http://localhost:8000
 # (auto-installs: fastapi, uvicorn, pydantic, numpy, scikit-learn)
 
 # Terminal 4 — AMCU Hardware Simulator (optional)
@@ -359,18 +357,18 @@ npm run dev:sim
 
 | Role | Access Method | Passcode |
 | :--- | :--- | :--- |
-| 🔑 **Master Admin** (All Portals) | Click lock icon → Enter passcode | `1234` |
-| 🌾 Farmer | Select portal from landing page | — |
-| 🥛 Aggregator | Select portal from landing page | — |
-| 🔬 QC Officer | Select portal from landing page | — |
-| 🏛️ FSSAI Auditor | Select portal from landing page | — |
-| 🏷️ Consumer | Select portal from landing page | — |
+| **Master Admin** (All Portals) | Click lock icon -> Enter passcode | `1234` |
+| Farmer | Select portal from landing page | — |
+| Aggregator | Select portal from landing page | — |
+| QC Officer | Select portal from landing page | — |
+| FSSAI Auditor | Select portal from landing page | — |
+| Consumer | Select portal from landing page | — |
 
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
-### Phase 1 — Complete ✅ (Current)
+### Phase 1 — Complete (Current)
 - [x] 5-portal RBAC dashboard ecosystem
 - [x] Leaflet GIS state/district drill-down with `flyTo` camera animation
 - [x] Python Isolation Forest anomaly detection (2 inference endpoints)
@@ -383,10 +381,10 @@ npm run dev:sim
 ### Phase 2 — Hardware IoT Integration
 - [ ] Encrypted direct serial/Bluetooth data streaming from physical AMCU & Mandara milk analyzers
 - [ ] HSM keypair provisioning on physical hardware units
-- [ ] Zero-interception guarantee: raw sensor → cloud (no human-writable entry points)
+- [ ] Zero-interception guarantee: raw sensor -> cloud (no human-writable entry points)
 
 ### Phase 3 — Linguistic Accessibility
-- [ ] Expand to all **22 official Indian languages** (Marathi, Gujarati, Tamil, Telugu, Punjabi, Bengali, Kannada…)
+- [ ] Expand to all **22 official Indian languages** (Marathi, Gujarati, Tamil, Telugu, Punjabi, Bengali, Kannada...)
 - [ ] Geo-location based **automatic dialect & accent detection** for TTS audio receipts  
   *(e.g., Haryanvi Hindi, Deshi Marathi, Mewati)*
 - [ ] Offline TTS audio receipt generation on constrained mobile devices
@@ -399,19 +397,19 @@ npm run dev:sim
 
 ---
 
-## 🔒 Security Model
+## Security Model
 
 ```
   [ AMCU Hardware Raw Data ]
            │
            ▼  (Read-Only Serial Lock — no manual override)
-  [ Secp256k1 HSM Signature ]  ← Private key burned into hardware unit
+  [ Secp256k1 HSM Signature ]  <-- Private key burned into hardware unit
            │
            ▼  (Network Transmission — TLS encrypted)
-  [ SHA-256 Digest ]           ← Immutable transaction fingerprint
+  [ SHA-256 Digest ]           <-- Immutable transaction fingerprint
            │
            ▼  (Cloud Storage)
-  [ On-Chain Provenance Ledger ] ← Consumer-verifiable, tamper-evident
+  [ On-Chain Provenance Ledger ] <-- Consumer-verifiable, tamper-evident
 ```
 
 - **RBAC Gate**: Every portal access attempt passes through `RegisteredIdAuthModal.jsx` with JWT session control.
@@ -420,7 +418,7 @@ npm run dev:sim
 
 ---
 
-## 🛠️ Tech Stack Summary
+## Tech Stack Summary
 
 | Layer | Technology | Version |
 | :--- | :--- | :--- |
@@ -442,7 +440,7 @@ npm run dev:sim
 
 ---
 
-## 📄 License
+## License
 
 Distributed under the [MIT License](LICENSE). See `LICENSE` for details.
 
@@ -450,9 +448,9 @@ Distributed under the [MIT License](LICENSE). See `LICENSE` for details.
 
 <div align="center">
 
-Built with ❤️ for **HackIndia AI & Web3 Builders Hackathon 2026**
+Built for **HackIndia AI & Web3 Builders Hackathon 2026**
 
-**Clean milk for every family · Guaranteed income for every farmer · Open infrastructure for India 🇮🇳**
+**Clean milk for every family · Guaranteed income for every farmer · Open infrastructure for India**
 
 *"Hardware-anchored supply chain integrity, not paper receipts."*
 
